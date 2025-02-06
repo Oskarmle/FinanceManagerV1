@@ -13,11 +13,21 @@ import { TodoEntity } from "./TodoEntity";
 export default function Todo() {
   const [todos, setTodos] = React.useState([] as TodoEntity[]);
   const [todo, setTodo] = React.useState("");
+
   const onAddTodo = () => {
     const newTodo = new TodoEntity(todos.length, todo);
     setTodos([...todos, newTodo]);
-    console.log(todos);
+    setTodo("");
   };
+
+  const toggleTodoCompletion = (id: number) => {
+    setTodos((checkTodos) =>
+      checkTodos.map((todo) =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+      )
+    );
+  };
+
   return (
     <View style={styles.todoContainer}>
       <Text>Todo</Text>
@@ -27,17 +37,22 @@ export default function Todo() {
         value={todo}
         placeholder="useless placeholder"
       />
-
       <Button
         onPress={onAddTodo}
         title="Add todo"
         color="#841584"
         accessibilityLabel="Add todo"
       />
-      <TodoList></TodoList>
       <FlatList
+        style={styles.todoList}
         data={todos}
-        renderItem={({ item }) => <Text>{item.title}</Text>}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <TodoList
+            todoItem={item}
+            toggleTodoCompletion={toggleTodoCompletion}
+          ></TodoList>
+        )}
       ></FlatList>
     </View>
   );
@@ -46,7 +61,7 @@ export default function Todo() {
 const styles = StyleSheet.create({
   input: {
     height: 40,
-    width: 200,
+    width: 300,
     margin: 12,
     borderWidth: 1,
     padding: 10,
@@ -54,6 +69,10 @@ const styles = StyleSheet.create({
   todoContainer: {
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 50,
+    top: 80,
+  },
+  todoList: {
+    marginTop: 20,
+    gap: 10,
   },
 });
