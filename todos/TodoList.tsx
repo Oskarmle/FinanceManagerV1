@@ -20,7 +20,7 @@ export default function TodoList({
         style={[styles.todo, todoItem.completed && styles.completedTodo]}
         onPress={handleOnPress}
       >
-        <Text style={styles.todoText}>{todoItem.title}</Text>
+        <Text style={styles.todoText}>{todoItem.todo}</Text>
       </TouchableOpacity>
     </View>
   );
