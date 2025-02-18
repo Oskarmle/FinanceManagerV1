@@ -7,19 +7,25 @@ import {
   FlatList,
 } from "react-native";
 import React, { useEffect } from "react";
-import TodoList from "./TodoList";
-import { TodoEntity } from "./TodoEntity";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import TodoList from "../../todos/TodoList";
+import { TodoEntity } from "../../todos/TodoEntity";
+import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { API_URL } from "@env";
+import { useNavigation } from "@react-navigation/native";
+import { RootStackParamList } from "../../App";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 type FormData = {
   todo: string;
 };
 
-export default function Todo() {
+export default function EntryList() {
   const [todos, setTodos] = React.useState([] as TodoEntity[]);
   const [todo, setTodo] = React.useState("");
+
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const toggleTodoCompletion = (id: number) => {
     setTodos((checkTodos) =>
@@ -51,7 +57,7 @@ export default function Todo() {
   const fetchTodos = async () => {
     try {
       const response = await axios.get(`http://${API_URL}/categories`);
-      setTodos(response.data); // Set the fetched todos
+      setTodos(response.data);
     } catch (error) {
       console.error("Failed to fetch todos", error);
     }
@@ -65,7 +71,7 @@ export default function Todo() {
   const onAddTodo = () => {
     const data: FormData = { todo: todo };
     mutation.mutate(data);
-    // console.log(API_URL);
+    console.log(API_URL);
   };
 
   return (
@@ -94,6 +100,10 @@ export default function Todo() {
           ></TodoList>
         )}
       ></FlatList>
+      <Button
+        title="Entry Edit"
+        onPress={() => navigation.navigate("EntryEdit")}
+      />
     </View>
   );
 }
