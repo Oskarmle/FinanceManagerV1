@@ -2,14 +2,27 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { CategoryEntity } from "./CategoryEntity";
 
 export type CategoryListProps = {
-  CategoryItem: CategoryEntity;
+  categoryItem: CategoryEntity;
+  toggleCategoryCompletion: (id: number) => void;
 };
 
-export default function CategoryListItem({ CategoryItem }: CategoryListProps) {
+export default function CategoryListItem({
+  categoryItem,
+  toggleCategoryCompletion,
+}: CategoryListProps) {
+  const onCategoryPress = () => {
+    toggleCategoryCompletion(categoryItem.id);
+  };
+
   return (
     <View>
-      <TouchableOpacity style={[styles.category]}>
-        <Text style={styles.categoryText}>{CategoryItem.category}</Text>
+      <TouchableOpacity
+        style={[
+          styles.category,
+          categoryItem.completed && styles.completedCategory,
+        ]} onPress={onCategoryPress}
+      >
+        <Text style={styles.categoryText}>{categoryItem.category}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -27,6 +40,10 @@ const styles = StyleSheet.create({
     paddingRight: 5,
     paddingTop: 8,
     paddingBottom: 8,
+  },
+  completedCategory: {
+    color: "white",
+    backgroundColor: "green",
   },
   categoryText: {
     color: "white",

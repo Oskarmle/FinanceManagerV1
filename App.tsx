@@ -1,15 +1,17 @@
 import { StatusBar } from "expo-status-bar";
-import EntryList from "./screens/entries/EntryList";
-import EntryEdit from "./screens/entries/EntryEdit";
-import EntryDelete from "./screens/entries/EntryDelete";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import CategoryNew from "./screens/categories/CategoryNew";
-import CategoryList from "./screens/categories/CategoryList";
+import { Ionicons } from "@expo/vector-icons";
+
+// Screen imports
 import Frontpage from "./screens/Frontpage";
-import { FontAwesome, MaterialIcons, Ionicons } from "@expo/vector-icons";
+import CategoryList from "./screens/categories/CategoryList";
+import EntryDelete from "./screens/entries/EntryDelete";
+import EntryList from "./screens/entries/EntryList";
+import EntryEdit from "./screens/entries/EntryEdit";
+import CategoryNew from "./screens/categories/CategoryNew";
 
 const queryClient = new QueryClient();
 
@@ -35,11 +37,20 @@ function EntryListStack() {
     </Stack.Navigator>
   );
 }
+
 function CategoryListStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="CategoryList" component={CategoryList} />
-      <Stack.Screen name="CategoryNew" component={CategoryNew} />
+      <Stack.Screen
+        name="CategoryList"
+        component={CategoryList}
+        options={{ title: "All categories" }}
+      />
+      <Stack.Screen
+        name="CategoryNew"
+        component={CategoryNew}
+        options={{ title: "Create a new category" }}
+      />
     </Stack.Navigator>
   );
 }
@@ -52,18 +63,18 @@ function HomepageStack() {
         component={Frontpage}
         options={{
           title: "Homepage",
-          headerTitleAlign: "center", // Center the title
+          headerTitleAlign: "center",
         }}
-      />
-      <Stack.Screen
-        name="EntryList"
-        component={EntryListStack}
-        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="CategoryList"
         component={CategoryListStack}
-        options={{ headerShown: false }}
+        options={{ headerShown: false, title: "Categories" }}
+      />
+      <Stack.Screen
+        name="EntryList"
+        component={EntryList}
+        options={{ headerShown: false, title: "Entries" }}
       />
     </Stack.Navigator>
   );
@@ -88,11 +99,13 @@ function MyTabs() {
           tabBarIcon: ({ color }) => (
             <Ionicons name="home-outline" size={24} color={color} />
           ),
+          tabBarLabel: "Home"
         }}
+        
       />
       <Tab.Screen
         name="List"
-        component={EntryList}
+        component={EntryListStack}
         options={{
           tabBarIcon: ({ color }) => (
             <Ionicons name="list-outline" size={24} color={color} />
