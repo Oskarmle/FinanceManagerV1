@@ -13,4 +13,13 @@ export class CategoriesAPI {
       throw error;
     }
   }
+
+  static async deleteCategory(id: number) {
+    try {
+      await axios.delete(`${CategoriesAPI.CATEGORIES_URL}/${id}`);
+    } catch (error) {
+      console.error("API Request Error:", error);
+      throw error;
+    }
+  }
 }

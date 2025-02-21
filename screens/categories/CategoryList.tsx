@@ -13,6 +13,7 @@ export default function CategoryNew() {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
+  //Fetch categories from the API
   const fetchCategories = async () => {
     try {
       const response = await CategoriesAPI.getCategories();
@@ -22,19 +23,14 @@ export default function CategoryNew() {
     }
   };
 
-  // Toggle category completion
-  const toggleCategoryCompletion = (id: number) => {
-    setCategories((checkCategories) =>
-      checkCategories.map((category) =>
-        category.id === id
-          ? { ...category, completed: !category.completed }
-          : category
-      )
-    );
-  };
-
+  //Navigate to the CategoryNew screen
   const handleCreateCategoryPress = () => {
     navigation.navigate("CategoryNew");
+  };
+
+  const handleDeleteCategory = (id: number) => {
+    CategoriesAPI.deleteCategory(id);
+    fetchCategories();
   };
 
   useEffect(() => {
@@ -51,8 +47,8 @@ export default function CategoryNew() {
         renderItem={({ item }) => (
           <CategoryListItem
             categoryItem={item}
-            toggleCategoryCompletion={toggleCategoryCompletion}
-          ></CategoryListItem>
+            deleteCategory={handleDeleteCategory}
+          />
         )}
       ></FlatList>
       <View style={styles.CreateCategoryContainer}>
