@@ -3,25 +3,12 @@ import { CategoryEntity } from "./CategoryEntity";
 
 export type CategoryListProps = {
   categoryItem: CategoryEntity;
-  toggleCategoryCompletion: (id: number) => void;
 };
 
-export default function CategoryListItem({
-  categoryItem,
-  toggleCategoryCompletion,
-}: CategoryListProps) {
-  const onCategoryPress = () => {
-    toggleCategoryCompletion(categoryItem.id);
-  };
-
+export default function CategoryListItem({ categoryItem }: CategoryListProps) {
   return (
     <View>
-      <TouchableOpacity
-        style={[
-          styles.category,
-          categoryItem.completed && styles.completedCategory,
-        ]} onPress={onCategoryPress}
-      >
+      <TouchableOpacity style={[styles.category]}>
         <Text style={styles.categoryText}>{categoryItem.category}</Text>
       </TouchableOpacity>
     </View>
@@ -41,10 +28,7 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     paddingBottom: 8,
   },
-  completedCategory: {
-    color: "white",
-    backgroundColor: "green",
-  },
+
   categoryText: {
     color: "white",
   },

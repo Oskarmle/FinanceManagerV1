@@ -1,37 +1,22 @@
 import { View, Text, TextInput, StyleSheet, Button } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { CategoryEntity } from "../../category/CategoryEntity";
-import { useMutation } from "@tanstack/react-query";
-import { API_URL } from "@env";
-import axios from "axios";
+import { AppDispatch } from "../../store/store";
+import { useDispatch } from "react-redux";
+import { createCategory } from "../../category/categorySlice";
 
 type FormData = {
   category: string;
 };
 
 export default function CategoryNew() {
-  const [category, setCategory] = React.useState("");
-
-  const mutation = useMutation<unknown, Error, FormData>({
-    mutationFn: (newCategory) => {
-      return axios.post(`http://${API_URL}/categories`, newCategory, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-    },
-    onError: (error) => {
-      console.error("Creating category failed", error);
-    },
-    onSuccess: () => {
-      console.log("Category created successfully");
-    },
-  });
+  const [category, setCategory] = useState("");
+  const dispatch = useDispatch<AppDispatch>();
 
   const onAddCategory = () => {
-    const data: FormData = { category: category };
-    mutation.mutate(data);
-
+    console.log("Add category");
+    const newCategory = new CategoryEntity(category);
+    dispatch(createCategory(newCategory));
   };
 
   return (

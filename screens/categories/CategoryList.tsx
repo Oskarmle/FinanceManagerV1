@@ -1,44 +1,28 @@
 import { View, Text, StyleSheet, FlatList, Button } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../../App";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { CategoriesAPI } from "../../APIs/CategoryAPI";
-import { CategoryEntity } from "../../category/CategoryEntity";
 import CategoryListItem from "../../category/CategoryListItem";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../store/store";
+import { fetchCategories } from "../../category/categorySlice";
 
 export default function CategoryNew() {
-  const [categories, setCategories] = useState<CategoryEntity[]>([]);
-
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-
-  const fetchCategories = async () => {
-    try {
-      const response = await CategoriesAPI.getCategories();
-      setCategories(response);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  // Toggle category completion
-  const toggleCategoryCompletion = (id: number) => {
-    setCategories((checkCategories) =>
-      checkCategories.map((category) =>
-        category.id === id
-          ? { ...category, completed: !category.completed }
-          : category
-      )
-    );
-  };
 
   const handleCreateCategoryPress = () => {
     navigation.navigate("CategoryNew");
   };
 
+  // Redux stuff
+  const categories = useSelector((state: RootState) => state.category.categories);
+  const dispatch = useDispatch<AppDispatch>();
+  console.log(categories);
+
   useEffect(() => {
-    fetchCategories();
+    dispatch(fetchCategories());
   }, []);
 
   return (
@@ -47,12 +31,9 @@ export default function CategoryNew() {
       <FlatList
         style={styles.CategoryList}
         data={categories}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item.id?.toString() ?? ""}
         renderItem={({ item }) => (
-          <CategoryListItem
-            categoryItem={item}
-            toggleCategoryCompletion={toggleCategoryCompletion}
-          ></CategoryListItem>
+          <CategoryListItem categoryItem={item}></CategoryListItem>
         )}
       ></FlatList>
       <View style={styles.CreateCategoryContainer}>

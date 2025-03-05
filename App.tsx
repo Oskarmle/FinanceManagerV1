@@ -1,9 +1,10 @@
 import { StatusBar } from "expo-status-bar";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
+import { store } from "./store/store";
+import { Provider } from "react-redux";
 
 // Screen imports
 import Frontpage from "./screens/Frontpage";
@@ -12,8 +13,6 @@ import EntryDelete from "./screens/entries/EntryDelete";
 import EntryList from "./screens/entries/EntryList";
 import EntryEdit from "./screens/entries/EntryEdit";
 import CategoryNew from "./screens/categories/CategoryNew";
-
-const queryClient = new QueryClient();
 
 export type RootStackParamList = {
   EntryList: undefined;
@@ -99,9 +98,8 @@ function MyTabs() {
           tabBarIcon: ({ color }) => (
             <Ionicons name="home-outline" size={24} color={color} />
           ),
-          tabBarLabel: "Home"
+          tabBarLabel: "Home",
         }}
-        
       />
       <Tab.Screen
         name="List"
@@ -118,11 +116,11 @@ function MyTabs() {
 
 export default function App() {
   return (
-    <QueryClientProvider client={queryClient}>
+    <Provider store={store}>
       <NavigationContainer>
         <StatusBar style="auto" />
         <MyTabs />
       </NavigationContainer>
-    </QueryClientProvider>
+    </Provider>
   );
 }
