@@ -62,8 +62,7 @@ function HomepageStack() {
         name="Frontpage"
         component={Frontpage}
         options={{
-          title: "Homepage",
-          headerTitleAlign: "center",
+          headerShown: false,
         }}
       />
       <Stack.Screen
@@ -86,9 +85,9 @@ function MyTabs() {
       initialRouteName="Home"
       screenOptions={{
         animation: "shift",
-        tabBarActiveTintColor: "red",
-        tabBarInactiveTintColor: "white",
-        tabBarStyle: { backgroundColor: "black" },
+        tabBarActiveTintColor: "#4E4667",
+        tabBarInactiveTintColor: "#4E4667",
+        tabBarStyle: { backgroundColor: "white" },
         headerShown: false,
       }}
     >
@@ -99,9 +98,8 @@ function MyTabs() {
           tabBarIcon: ({ color }) => (
             <Ionicons name="home-outline" size={24} color={color} />
           ),
-          tabBarLabel: "Home"
+          tabBarLabel: "Home",
         }}
-        
       />
       <Tab.Screen
         name="List"
