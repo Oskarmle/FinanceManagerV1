@@ -14,7 +14,7 @@ export default function Frontpage() {
     navigation.navigate("EntryList");
   };
   const handleCategoriesPress = () => {
-    navigation.navigate("CategoryList");
+    navigation.navigate("Category");
   };
 
   const handleFinancesPress = () => {

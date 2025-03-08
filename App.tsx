@@ -7,11 +7,10 @@ import { Ionicons } from "@expo/vector-icons";
 
 // Screen imports
 import Frontpage from "./screens/Frontpage";
-import CategoryList from "./screens/categories/CategoryList";
+import Category from "./screens/categories/Category";
 import EntryDelete from "./screens/entries/EntryDelete";
 import EntryList from "./screens/entries/EntryList";
 import EntryEdit from "./screens/entries/EntryEdit";
-import CategoryNew from "./screens/categories/CategoryNew";
 
 const queryClient = new QueryClient();
 
@@ -19,8 +18,7 @@ export type RootStackParamList = {
   EntryList: undefined;
   EntryEdit: undefined;
   EntryDelete: undefined;
-  CategoryList: undefined;
-  CategoryNew: undefined;
+  Category: undefined;
   Frontpage: undefined;
 };
 
@@ -38,23 +36,6 @@ function EntryListStack() {
   );
 }
 
-function CategoryListStack() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="CategoryList"
-        component={CategoryList}
-        options={{ title: "All categories" }}
-      />
-      <Stack.Screen
-        name="CategoryNew"
-        component={CategoryNew}
-        options={{ title: "Create a new category" }}
-      />
-    </Stack.Navigator>
-  );
-}
-
 function HomepageStack() {
   return (
     <Stack.Navigator>
@@ -66,9 +47,14 @@ function HomepageStack() {
         }}
       />
       <Stack.Screen
-        name="CategoryList"
-        component={CategoryListStack}
-        options={{ headerShown: false, title: "Categories" }}
+        name="Category"
+        component={Category}
+        options={{
+          title: "Categories",
+          headerTitleStyle: { color: "white" },
+          headerTintColor: "white",
+          headerStyle: { backgroundColor: "#7994BC" },
+        }}
       />
       <Stack.Screen
         name="EntryList"
