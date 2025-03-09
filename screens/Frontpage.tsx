@@ -7,11 +7,11 @@ import CardFrontpage from "../components/CardFrontpage";
 export default function Frontpage() {
   type NavigationProp = NativeStackNavigationProp<
     RootStackParamList,
-    "EntryList"
+    "Entries"
   >;
   const navigation = useNavigation<NavigationProp>();
   const handleEntriesPress = () => {
-    navigation.navigate("EntryList");
+    navigation.navigate("Entries");
   };
   const handleCategoriesPress = () => {
     navigation.navigate("Category");
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     gap: 20,
-    marginTop: 70,
+    marginTop: 60,
   },
   CategoryContainer: {
     marginBottom: 20,

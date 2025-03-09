@@ -1,5 +1,7 @@
 export class CategoryEntity {
-  public completed: boolean = false;
-
-  constructor(public id: number, public category: string) {}
+  constructor(
+    public id: number,
+    public category: string,
+    public entryCount: object[]
+  ) {}
 }

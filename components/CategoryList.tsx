@@ -10,7 +10,15 @@ export default function CategoryList() {
   const fetchCategories = async () => {
     try {
       const response = await CategoriesAPI.getCategories();
-      setCategories(response);
+
+      // Count number of entries for each category
+      const categoryEntryCount = response.map(
+        (category: { entries: object[] }) => ({
+          ...category,
+          entryCount: category.entries.length,
+        })
+      );
+      setCategories(categoryEntryCount);
     } catch (error) {
       console.error(error);
     }
@@ -33,23 +41,17 @@ export default function CategoryList() {
         <Text style={styles.headerRow}>Amount of entries</Text>
       </View>
       <View style={styles.content}>
-        {/* <FlatList
-          data={categories}
-          renderItem={({ item }) => (
-            <View key={item.id}>
-              <TouchableOpacity onPress={() => handleDeletePress(item.id)}>
-                <Text style={styles.row}>{item.category}</Text>
-                <View style={styles.line}></View>
-              </TouchableOpacity>
-            </View>
-          )}
-        /> */}
         <SwipeListView
           data={categories}
           renderItem={({ item }) => (
             <View key={item.id}>
               <TouchableOpacity activeOpacity={1}>
-                <Text style={styles.row}>{item.category}</Text>
+                <View style={styles.row}>
+                  <Text style={styles.rowItem}>{item.category}</Text>
+                  <Text style={styles.rowItem}>
+                    {item.entryCount.toString()}
+                  </Text>
+                </View>
                 <View style={styles.line}></View>
               </TouchableOpacity>
             </View>
@@ -111,11 +113,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#D8D8D8",
   },
   row: {
-    paddingLeft: 12,
+    flexDirection: "row",
+    justifyContent: "space-between",
     paddingRight: 12,
+    backgroundColor: "#F4F4F4",
+  },
+  rowItem: {
+    paddingLeft: 12,
     paddingTop: 6,
     paddingBottom: 6,
-    backgroundColor: "#F4F4F4",
   },
   hiddenContainer: {
     alignItems: "flex-end",
@@ -127,7 +133,7 @@ const styles = StyleSheet.create({
     paddingTop: 6,
     paddingBottom: 6,
     paddingRight: 12,
-    paddingLeft: 32,
+    paddingLeft: 152,
   },
   deleteText: {
     color: "#F4F4F4",

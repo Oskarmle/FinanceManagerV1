@@ -8,16 +8,12 @@ import { Ionicons } from "@expo/vector-icons";
 // Screen imports
 import Frontpage from "./screens/Frontpage";
 import Category from "./screens/categories/Category";
-import EntryDelete from "./screens/entries/EntryDelete";
-import EntryList from "./screens/entries/EntryList";
-import EntryEdit from "./screens/entries/EntryEdit";
+import Entries from "./screens/entries/Entries";
 
 const queryClient = new QueryClient();
 
 export type RootStackParamList = {
-  EntryList: undefined;
-  EntryEdit: undefined;
-  EntryDelete: undefined;
+  Entries: undefined;
   Category: undefined;
   Frontpage: undefined;
 };
@@ -25,16 +21,6 @@ export type RootStackParamList = {
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const Tab = createBottomTabNavigator();
-
-function EntryListStack() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name="EntryList" component={EntryList} />
-      <Stack.Screen name="EntryEdit" component={EntryEdit} />
-      <Stack.Screen name="EntryDelete" component={EntryDelete} />
-    </Stack.Navigator>
-  );
-}
 
 function HomepageStack() {
   return (
@@ -57,9 +43,14 @@ function HomepageStack() {
         }}
       />
       <Stack.Screen
-        name="EntryList"
-        component={EntryList}
-        options={{ headerShown: false, title: "Entries" }}
+        name="Entries"
+        component={Entries}
+        options={{
+          title: "Your entries",
+          headerTitleStyle: { color: "white" },
+          headerTintColor: "white",
+          headerStyle: { backgroundColor: "#BC7979" },
+        }}
       />
     </Stack.Navigator>
   );
@@ -88,8 +79,8 @@ function MyTabs() {
         }}
       />
       <Tab.Screen
-        name="List"
-        component={EntryListStack}
+        name="Entries"
+        component={Entries}
         options={{
           tabBarIcon: ({ color }) => (
             <Ionicons name="list-outline" size={24} color={color} />
