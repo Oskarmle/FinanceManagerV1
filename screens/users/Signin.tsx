@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "../../store/store";
 import { TextInput } from "react-native-gesture-handler";
 import { UserEntity } from "../../user/UserEntity";
-import { signin, signup } from "../../user/userSlice";
+import { signin } from "../../user/userSlice";
 
 export default function Signin() {
   const [username, setUsername] = useState("");
@@ -33,7 +33,7 @@ export default function Signin() {
         secureTextEntry={true}
         placeholder="Password"
       />
-      <Button title="Signin" onPress={handleSubmit} />
+      <Button title="Sign in" onPress={handleSubmit} />
     </View>
   );
 }

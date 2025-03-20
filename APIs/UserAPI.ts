@@ -10,7 +10,7 @@ export class UsersAPI {
   }
 
   static async signinUser(user: UserEntity) {
-    const response = await axios.post(`http://${API_URL}/auth/signup`, user);
+    const response = await axios.post(`http://${API_URL}/auth/signin`, user);
     const data = response.data;
     return data;
   }

@@ -12,19 +12,20 @@ import Frontpage from "./screens/Frontpage";
 import Category from "./screens/categories/Category";
 import Entries from "./screens/entries/Entries";
 import Signin from "./screens/users/Signin";
+import Profile from "./screens/users/Profile";
 import { reloadJwtFromStorage } from "./user/userSlice";
 
 export type RootStackParamList = {
   Entries: undefined;
   Category: undefined;
   Frontpage: undefined;
+  Profile: undefined;
 };
 
 export type LoginSignupStackParamList = {
-  Signin: undefined; // No parameters
+  Signin: undefined;
 };
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator();
 
 const SigninSignupStack = () => {
@@ -43,6 +44,7 @@ const SigninSignupStack = () => {
 };
 
 function HomepageStack() {
+  const Stack = createNativeStackNavigator<RootStackParamList>();
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -85,13 +87,13 @@ function HomeTabs() {
         tabBarActiveTintColor: "#4E4667",
         tabBarInactiveTintColor: "#4E4667",
         tabBarStyle: { backgroundColor: "white" },
-        headerShown: false,
       }}
     >
       <Tab.Screen
         name="Home"
         component={HomepageStack}
         options={{
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <Ionicons name="home-outline" size={24} color={color} />
           ),
@@ -102,8 +104,20 @@ function HomeTabs() {
         name="Entries"
         component={Entries}
         options={{
+          headerTitleStyle: { color: "white" },
+          headerTintColor: "white",
+          headerStyle: { backgroundColor: "#BC7979" },
           tabBarIcon: ({ color }) => (
             <Ionicons name="list-outline" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="person-outline" size={24} color={color} />
           ),
         }}
       />

@@ -34,7 +34,7 @@ const userSlice = createSlice({
     reloadJwtFromStorage: (state, action: PayloadAction<string>) => {
       state.token = action.payload;
     },
-    logout: (state) => {
+    signout: (state) => {
       state.token = "";
       SecureStore.setItemAsync("jwt", "");
     },
@@ -49,12 +49,11 @@ const userSlice = createSlice({
       state.errormessage = "Error signing up";
     });
     builder.addCase(signin.fulfilled, (state, action) => {
-      console.log("payload", action.payload);
-      SecureStore.setItemAsync("token", action.payload.token);
-      state.token = action.payload.token;
-      console.log("state.token", state.token);
-
+      // console.log("payload", action.payload);
+      SecureStore.setItemAsync("jwt", JSON.stringify(action.payload));
+      state.token = action.payload.access_token;
       state.errormessage = "";
+      // console.log(SecureStore.getItemAsync("jwt"));
     });
     builder.addCase(signin.rejected, (state, action) => {
       console.log("payload", action.payload);
@@ -63,5 +62,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { reloadJwtFromStorage, logout } = userSlice.actions;
+export const { reloadJwtFromStorage, signout } = userSlice.actions;
 export default userSlice.reducer;
