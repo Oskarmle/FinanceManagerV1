@@ -4,7 +4,7 @@ import axios from "axios";
 
 export class CategoriesAPI {
   static getCategories = async () => {
-    const mutation = useMutation<unknown, Error, FormData>({
+    const mutation = useMutation<unknown, Error>({
       mutationFn: (newCategory) => {
         return axios.post(`http://${API_URL}/categories`, newCategory, {
           headers: {

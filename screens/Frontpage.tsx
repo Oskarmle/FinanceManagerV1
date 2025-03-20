@@ -1,6 +1,6 @@
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { View, StyleSheet, Text, Button } from "react-native";
-import { RootStackParamList } from "../App";
+import { RootStackParamList } from "../NavigationWrapper";
 import { useNavigation } from "@react-navigation/native";
 import CardFrontpage from "../components/CardFrontpage";
 
@@ -24,7 +24,7 @@ export default function Frontpage() {
   return (
     <View style={styles.container}>
       <View style={styles.explainContainer}>
-        <Text style={styles.title}>Wecome back Oskar</Text>
+        <Text style={styles.title}>Wecome back .....</Text>
         <Text style={styles.description}>
           Total spent this month is "missing" and the category with the largest
           spent is "missing"
