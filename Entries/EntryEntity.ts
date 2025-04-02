@@ -4,7 +4,7 @@ export class EntryEntity {
     public title: string,
     public amount: number,
     public paymentMethod: number,
-    public category: string,
-    public date: string
+    public category: { id: number; category: string },
+    public datetime: string
   ) {}
 }

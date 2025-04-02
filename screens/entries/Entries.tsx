@@ -1,10 +1,12 @@
 import { View, Text, StyleSheet } from "react-native";
 import CreateEntry from "../../components/CreateEntry";
+import EntryList from "../../components/EntryList";
 
 export default function Entries() {
   return (
     <View style={styles.entryContainer}>
       <CreateEntry />
+      <EntryList />
     </View>
   );
 }
