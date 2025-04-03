@@ -49,7 +49,7 @@ const userSlice = createSlice({
       state.errormessage = "Error signing up";
     });
     builder.addCase(signin.fulfilled, (state, action) => {
-      // console.log("payload", action.payload);
+      console.log("payload", action.payload);
       SecureStore.setItemAsync(
         "jwt",
         JSON.stringify(action.payload.access_token)

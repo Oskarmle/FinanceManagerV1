@@ -44,7 +44,7 @@ export default function EntryList() {
                 <View style={styles.row}>
                   <Text style={styles.rowItem}>{item.title}</Text>
                   <Text style={styles.rowItem}>{item.category.category}</Text>
-                  <Text style={styles.rowItem}>{item.amount.toString()}</Text>
+                  <Text style={styles.amount}>{item.amount.toString()}</Text>
                 </View>
                 <View style={styles.line}></View>
               </TouchableOpacity>
@@ -71,6 +71,7 @@ export default function EntryList() {
 const styles = StyleSheet.create({
   card: {
     width: 390,
+    height: "32%",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
@@ -113,7 +114,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#F4F4F4",
   },
   rowItem: {
+    width: "41%",
     paddingLeft: 12,
+    paddingTop: 6,
+    paddingBottom: 6,
+  },
+  amount: {
+    width: "42%",
+    paddingLeft: 27,
     paddingTop: 6,
     paddingBottom: 6,
   },

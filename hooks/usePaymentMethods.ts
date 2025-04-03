@@ -17,7 +17,6 @@ export const usePaymentMethods = () => {
         ).values()
       );
       setPaymentMethods(paymentMethods);
-      console.log("Payment Methods:", paymentMethods);
     } catch (error) {
       console.error("Error fetching payment methods:", error);
     }

@@ -143,7 +143,6 @@ export default function NavigationWrapper() {
   useEffect(() => {
     async function getValueFor() {
       const userObj = JSON.parse((await SecureStore.getItemAsync("jwt")) || "");
-      console.log("userObj", userObj);
       dispatch(reloadJwtFromStorage(userObj));
     }
     getValueFor();

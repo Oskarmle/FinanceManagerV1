@@ -77,6 +77,7 @@ export default function CategoryList() {
 const styles = StyleSheet.create({
   card: {
     width: 390,
+    height: "72%",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,

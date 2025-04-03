@@ -5,6 +5,8 @@ import { useNavigation } from "@react-navigation/native";
 import CardFrontpage from "../components/CardFrontpage";
 import { UsersAPI } from "../APIs/UserAPI";
 import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 
 export default function Frontpage() {
   type NavigationProp = NativeStackNavigationProp<
@@ -24,10 +26,12 @@ export default function Frontpage() {
   };
 
   const [user, setUser] = React.useState<{ username: string } | null>(null);
+  const token = useSelector((state: RootState) => state.user.token);
+
 
   const fetchUser = async () => {
     try {
-      const response = await UsersAPI.getUser();
+      const response = await UsersAPI.getUser(token);
       setUser(response);
     } catch (error) {
       console.error("Error fetching user:", error);
@@ -37,16 +41,12 @@ export default function Frontpage() {
 
   useEffect(() => {
     fetchUser();
-  }, []);
+  }, [token]);
 
   return (
     <View style={styles.container}>
       <View style={styles.explainContainer}>
         <Text style={styles.title}>Welcome back {user?.username}</Text>
-        <Text style={styles.description}>
-          Total spent this month is "missing" and the category with the largest
-          spent is "missing"
-        </Text>
       </View>
       <CardFrontpage
         description="Get a report of your spending based on your entries and categories."
@@ -88,9 +88,5 @@ const styles = StyleSheet.create({
     fontSize: 27,
     fontWeight: "bold",
     marginBottom: 12,
-  },
-  description: {
-    color: "#4E4667",
-    fontSize: 22,
   },
 });

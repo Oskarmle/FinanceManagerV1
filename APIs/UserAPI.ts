@@ -1,7 +1,6 @@
 import { API_URL } from "@env";
 import axios from "axios";
 import { UserEntity } from "../user/UserEntity";
-import * as SecureStore from "expo-secure-store";
 
 export class UsersAPI {
   static async createUser(user: UserEntity) {
@@ -16,12 +15,10 @@ export class UsersAPI {
     return data;
   }
 
-  static async getUser() {
-    const token = await SecureStore.getItemAsync("jwt");
-
+  static async getUser(token: string) {
     const response = await axios.get(`http://${API_URL}/auth/profile`, {
       headers: {
-        Authorization: `Bearer ${token ? JSON.parse(token).access_token : ""}`,
+        Authorization: `Bearer ${token}`,
       },
     });
     const data = response.data;
