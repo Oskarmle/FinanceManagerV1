@@ -4,7 +4,6 @@ import {
   Text,
   View,
   TextInput,
-  Button,
   TouchableOpacity,
 } from "react-native";
 import { Controller, useForm } from "react-hook-form";
@@ -13,6 +12,8 @@ import RNDateTimePicker from "@react-native-community/datetimepicker";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { API_URL } from "@env";
+import { useCategories } from "../hooks/useCategories";
+import { usePaymentMethods } from "../hooks/usePaymentMethods";
 
 type EntryFormData = {
   title: string;
@@ -49,21 +50,9 @@ export default function CreateEntry() {
   const [date, setDate] = useState(formatDate(new Date()));
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
 
-  const paymentMethods = [
-    { label: "Cash", value: "Cash" },
-    { label: "Credit card", value: "Credit card" },
-    { label: "Debit card", value: "Debit card" },
-    { label: "Mobile payment", value: "Mobile payment" },
-    { label: "Bank transfer", value: "Bank transfer" },
-  ];
-
-  const categories = [
-    { label: "Food", value: 2 },
-    { label: "Housing", value: 6 },
-    { label: "Entertainment", value: 8 },
-    { label: "Sport", value: 10 },
-    { label: "Other", value: 9 },
-  ];
+  // Custom hooks
+  const categories = useCategories();
+  const paymentMethods = usePaymentMethods();
 
   const onChangeDate = (event, selectedDate) => {
     if (selectedDate) {
@@ -139,6 +128,7 @@ export default function CreateEntry() {
             <Dropdown
               style={styles.dropdownInput}
               data={paymentMethods}
+              onBlur={onBlur}
               labelField="label"
               onChange={(item) => onChange(item.value)}
               value={value}
@@ -158,6 +148,7 @@ export default function CreateEntry() {
             <Dropdown
               style={styles.dropdownInput}
               data={categories}
+              onBlur={onBlur}
               labelField="label"
               valueField="value"
               placeholder={"Select category"}
@@ -257,6 +248,5 @@ const styles = StyleSheet.create({
     color: "#707070",
     borderRadius: 10,
     backgroundColor: "#DADADA",
-    borderRadius: 10,
   },
 });

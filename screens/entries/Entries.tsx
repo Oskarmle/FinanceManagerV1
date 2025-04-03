@@ -1,13 +1,14 @@
 import { View, Text, StyleSheet } from "react-native";
 import CreateEntry from "../../components/CreateEntry";
 import EntryList from "../../components/EntryList";
+import { ScrollView } from "react-native-gesture-handler";
 
 export default function Entries() {
   return (
-    <View style={styles.entryContainer}>
+    <ScrollView contentContainerStyle={styles.entryContainer}>
       <CreateEntry />
       <EntryList />
-    </View>
+    </ScrollView>
   );
 }
 

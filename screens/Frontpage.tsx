@@ -1,8 +1,10 @@
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { View, StyleSheet, Text, Button } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import { RootStackParamList } from "../NavigationWrapper";
 import { useNavigation } from "@react-navigation/native";
 import CardFrontpage from "../components/CardFrontpage";
+import { UsersAPI } from "../APIs/UserAPI";
+import React, { useEffect } from "react";
 
 export default function Frontpage() {
   type NavigationProp = NativeStackNavigationProp<
@@ -21,17 +23,33 @@ export default function Frontpage() {
     console.log("Finances");
   };
 
+  const [user, setUser] = React.useState<{ username: string } | null>(null);
+
+  const fetchUser = async () => {
+    try {
+      const response = await UsersAPI.getUser();
+      setUser(response);
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      throw error;
+    }
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.explainContainer}>
-        <Text style={styles.title}>Wecome back .....</Text>
+        <Text style={styles.title}>Welcome back {user?.username}</Text>
         <Text style={styles.description}>
           Total spent this month is "missing" and the category with the largest
           spent is "missing"
         </Text>
       </View>
       <CardFrontpage
-        description="Get a report of your spendings based on your entries and categories."
+        description="Get a report of your spending based on your entries and categories."
         title="Your finances"
         handleOnPress={handleFinancesPress}
         style="finances"

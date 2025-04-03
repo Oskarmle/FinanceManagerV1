@@ -50,10 +50,12 @@ const userSlice = createSlice({
     });
     builder.addCase(signin.fulfilled, (state, action) => {
       // console.log("payload", action.payload);
-      SecureStore.setItemAsync("jwt", JSON.stringify(action.payload));
+      SecureStore.setItemAsync(
+        "jwt",
+        JSON.stringify(action.payload.access_token)
+      );
       state.token = action.payload.access_token;
       state.errormessage = "";
-      // console.log(SecureStore.getItemAsync("jwt"));
     });
     builder.addCase(signin.rejected, (state, action) => {
       console.log("payload", action.payload);
