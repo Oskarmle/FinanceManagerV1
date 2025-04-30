@@ -6,6 +6,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./store/store";
 import * as SecureStore from "expo-secure-store";
+import { reloadJwtFromStorage } from "./user/userSlice";
 
 // Screen imports
 import Frontpage from "./screens/Frontpage";
@@ -13,7 +14,7 @@ import Category from "./screens/categories/Category";
 import Entries from "./screens/entries/Entries";
 import Signin from "./screens/users/Signin";
 import Profile from "./screens/users/Profile";
-import { reloadJwtFromStorage } from "./user/userSlice";
+import Signup from "./screens/users/Signup";
 
 export type RootStackParamList = {
   Entries: undefined;
@@ -24,6 +25,7 @@ export type RootStackParamList = {
 
 export type LoginSignupStackParamList = {
   Signin: undefined;
+  Signup: undefined;
 };
 
 const Tab = createBottomTabNavigator();
@@ -35,6 +37,13 @@ const SigninSignupStack = () => {
       <Stack.Screen
         name="Signin"
         component={Signin}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Signup"
+        component={Signup}
         options={{
           headerShown: false,
         }}
